@@ -1,0 +1,22 @@
+<div id="full_view_event_container">
+    <div>
+        <div class='fv_event_title'>{{event.title}}</div>
+        <div class='fv_event_posted_by'>from {{event.postedBy}}</div>
+    </div>
+    <div class='fv_event_image_container'><img height=150 width=150 src="{{imageUrl}}{{event.imageurl}}"/></div>
+    <div>
+        <div class='fv_event_date'> {{event.dateTimestamp | date: 'EEEE, MMMM d, yyyy' }}</div>
+        <div class='fv_event_hour'>{{event.startHour | date: 'hh:mm a'}} - {{event.endHour | date:'hh:mm a'}}</div>
+        <div class='fv_event_place'> Place: {{event.place}} </div>
+        <div>Category: {{event.categoryName}}</div>
+        <div>
+
+            <div class='fv_event_contact_info'>
+                Contact:
+                <div> email: {{event.contactEmail}}</div>
+                <div>phone: {{event.contactPhone}}</div>
+            </div>
+            <div class='fv_event_full_description'>{{event.fullDescription}}</div>
+            <img class="saved_event_bookmark_icon btn" src={{event.src}}
+                 (click)="saveEvent($event, event.eid);$event.stopPropagation()">
+        </div>

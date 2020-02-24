@@ -1,0 +1,34 @@
+#homebg {
+    width: 100%;
+    height: 100vh;
+    //height: 920px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("/assets/images/homebg.jpg");
+    background-size: cover;
+    color: white;
+    padding: 50px;
+}
+
+#homebg .logo {
+    width: 20%;
+}
+
+#header_website_big_title {
+    text-align: center;
+    font-size: 80px !important;
+    font-weight: lighter;
+    font-family: RelayCond-Bold !important;
+}
+
+#home_subtitle {
+    padding: 20px;
+    text-align: center;
+    font-size: 30px !important;
+    font-weight: lighter;
+}
+
+.bottomTitles {
+    padding: 20px;
+    text-align: center;
+    font-size: 30px !important;
+    font-weight: lighter;
+}

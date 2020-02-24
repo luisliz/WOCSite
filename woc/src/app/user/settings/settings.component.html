@@ -1,0 +1,19 @@
+<div id="settings">
+    <mat-drawer-container autosize fxLayout="column" fxFlexFill>
+        <mat-drawer mode="side" opened class="dashboard-sidenav">
+            <mat-nav-list>
+                <a mat-list-item routerLink="/settings/change">
+                    <mat-icon>lock</mat-icon>
+                    Change Password</a>
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+            <!--<button type="button" mat-button (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>-->
+            <div class="dashboard-sidenav-content">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

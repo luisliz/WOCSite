@@ -1,0 +1,62 @@
+<form (ngSubmit)="resetPassword()" class="form" #myForm="ngForm" *ngIf="!change">
+    <h3>Reset Password</h3>
+    <h5>{{errorMessage}}</h5>
+    <mat-grid-list cols="4" rowHeight="25px" class="event_grid">
+        <mat-grid-tile [colspan]="4" [rowspan]="4" *ngIf="!sent">
+            <mat-form-field appearance="outline" class="resetInput">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" [(ngModel)]="email" placeholder="Email"
+                       [formControl]="emailFormControl">
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Email is required
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="2" *ngIf="!sent">
+            <button type="submit" mat-raised-button class="btn" id="resetButton">Reset Password</button>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="2" *ngIf="sent">
+            Sent reset link. Please check your email.
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>
+<form (ngSubmit)="resetChangePassword()" class="form" #myForm="ngForm" *ngIf="change">
+    <h3>Reset Password</h3>
+    <h5>{{errorMessage}}</h5>
+    <mat-grid-list cols="4" rowHeight="25px" class="event_grid">
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput" *ngIf="!changed">
+                <mat-label>New Password</mat-label>
+                <input matInput type="password" placeholder="New Password" [(ngModel)]="passwords.new"
+                [formControl]="passwordFormControl">
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                    New Password is required
+                </mat-error>
+                <mat-error *ngIf="passwordFormControl.hasError('minlength')">
+                    New Password is required
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput" *ngIf="!changed">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="passwords.confirm"
+                [formControl]="confirmFormControl">
+                <mat-error *ngIf="confirmFormControl.hasError('required')">
+                    Password doesn't match
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="4" *ngIf="!changed">
+            <button type="submit" mat-raised-button class="btn" id="resetButton">
+                Change Password
+            </button>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="2" *ngIf="changed">
+           Password Changed.
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>

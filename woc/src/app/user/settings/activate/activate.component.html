@@ -1,0 +1,17 @@
+<div id="homebg">
+    <div>Account Activation</div>
+    <span *ngIf="invalid">
+        {{errorMessage}}
+
+        <div><button type="submit" mat-raised-button class="btn" id="loginButton" (click)="resendActivation()" >Resend Activation</button></div>
+    </span>
+
+    <span *ngIf="activated">
+        Account Activated
+    </span>
+
+    <span *ngIf="resent">
+        Email Resent
+        {{errorMessage}}
+    </span>
+</div>

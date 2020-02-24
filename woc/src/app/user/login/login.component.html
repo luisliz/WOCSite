@@ -1,0 +1,62 @@
+<!--<form class="login-form" name="userform" method="post" class='form' #formCtrl="ngForm">
+    <div>
+        <label class="error">{{errorMessage}}</label>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail"></label>
+        <input type="email" [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}" placeholder="Email"
+               required>
+    </div>
+    <div>
+        <label for="inputPassword"></label>
+        <input type="password" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}"
+               placeholder="Password"
+               required>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn" id="loginButton" (click)="loginUser()" [disabled]="formCtrl.form.invalid">
+            Login
+        </button>
+    </div>
+    Not a member? <a href="/register">Register</a>
+</form>-->
+
+<form (ngSubmit)="loginUser()" class="form" #myForm="ngForm">
+    <h3>Login</h3>
+    <h5>{{errorMessage}}</h5>
+    <mat-grid-list cols="4" rowHeight="25px" class="event_grid">
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" [(ngModel)]="user.email" placeholder="Email"
+                       [formControl]="emailFormControl">
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Email is required
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Password" [(ngModel)]="user.password"
+                       [formControl]="passwordFormControl">
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                    Password is required
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="2">
+            <button type="submit" mat-raised-button class="btn" id="loginButton">Login</button>
+
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="2">
+            Not a member? <a routerLink="/register">Register</a>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="1">
+            <a routerLink="/resetpassword">Forgot Password</a>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>

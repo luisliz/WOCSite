@@ -1,0 +1,334 @@
+<!--image
+
+briefDescription
+
+category
+
+email (optional) put user email as default
+
+phone
+
+posted uid (user uid) //hidden --->
+
+<div class="form main_grid_item" id="submit_event_form">
+    <h3>{{locationTitle}} event</h3>
+    <mat-divider></mat-divider>
+    <h5>{{errorMessage}}</h5>
+    <div fxShow="true" fxHide.lt-md="true">
+        <form (ngSubmit)="createEvent()" #myForm="ngForm">
+            <mat-grid-list [cols]="8" rowHeight="100px" gutterSize="10px" class="event_grid">
+                <mat-grid-tile [colspan]="8" [rowspan]="1" *ngIf="showProgressBar">
+                    Uploading event
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Event Title</mat-label>
+                        <input matInput placeholder="Title" id="title" [(ngModel)]="event.title" name="title"
+                               [formControl]="titleFormControl">
+                        <mat-error *ngIf="titleFormControl.hasError('maxlength')">
+                            Title is exceeding max {{event.title.length}}/50
+                        </mat-error>
+                        <mat-error *ngIf="titleFormControl.hasError('required')">
+                            Title is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Event Location</mat-label>
+                        <input matInput placeholder="Location" id="location" [(ngModel)]="event.place"
+                               name="location"
+                               [formControl]="locationFormControl">
+                        <mat-error *ngIf="locationFormControl.hasError('maxlength')">
+                            Location is exceeding max {{event.place.length}}/20
+                        </mat-error>
+                        <mat-error *ngIf="locationFormControl.hasError('required')">
+                            Location is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Categories" name="categories" [(ngModel)]="event.categoryName"
+                                    [formControl]="categoryFormControl">
+                            <mat-option>None</mat-option>
+                            <mat-option *ngFor="let category of categories;"
+                                        value="{{category}}">{{category}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="categoryFormControl.hasError('required')">
+                            A category is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile [colspan]="2" [rowspan]="4">
+                    <div id="events_feed" class="events_feed main_grid_item">
+                        <button type="button" id="publish_button" mat-raised-button (click)="fileInput.click()">
+                            <span>Upload Image</span>
+                            <input #fileInput type="file" (change)="onSelectFile($event)" style="display:none;"/>
+                        </button>
+                        <div class='event' title='{{imageUrl}}'>
+                            <div class='event_image_container'>
+                                <!--<mat-grid-tile [colspan]="2" [rowspan]="1">-->
+
+                                <!--</mat-grid-tile>-->
+                                <span>&nbsp;<img height=350 width=233 [src]="url"/></span>
+
+                            </div>
+                            <div class='event_title'>{{event.title}}</div>
+                            <div class="event_postedby">Posted by {{user.username}} </div>
+                            <div class='event_header'>
+                                <div class='event_info_header'>
+                                    <div class='event_date'> {{tempDate | date: 'EEE, MMM d, yyyy'}}
+                                        {{tempSHour | date: 'hh:mm a'}}-{{tempEHour | date: 'hh:mm a'}}</div>
+                                    <div class='event_place'>Place: {{event.place}} </div>
+                                </div>
+                            </div>
+                            <div class='event_brief_description'>{{event.briefDescription}}<br/></div>
+                            <img class="saved_event_bookmark_icon btn"
+                                 src="/assets/images/bookmark_icon_for_saved_events_gray.png">
+                        </div>
+                    </div>
+                </mat-grid-tile>
+                <!--------------------------------------->
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Date</mat-label>
+                        <input matInput placeholder="Date" id="date"
+                               [(ngModel)]="event.dateTimestamp" [formControl]="generalFormControl">
+                        <mat-hint>The date the event will take place</mat-hint>
+                        <mat-error *ngIf="generalFormControl.hasError('required')">
+                            Date is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Time</mat-label>
+                        <input matInput id="start_time_hour" placeholder="HH:MM" [formControl]="stimeFormControl"
+                               [(ngModel)]="event.startHour">
+                        <mat-error *ngIf="stimeFormControl.hasError('required')">
+                            Start Time is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>End Time</mat-label>
+                        <input matInput placeholder="HH:MM" id="end_time_hour" [formControl]="etimeFormControl"
+                               [(ngModel)]="event.endHour">
+                        <mat-error *ngIf="etimeFormControl.hasError('required')">
+                            End Time is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="6" [rowspan]="2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Brief Description</mat-label>
+                        <textarea matInput placeholder="Brief Description" id="brief_description"
+                                  [(ngModel)]="event.briefDescription" name="briefDescription"
+                                  [formControl]="briefFormControl"></textarea>
+                        <mat-hint>Simple description to catch the attention of the
+                            user {{event.briefDescription.length}}
+                            /150
+                        </mat-hint>
+                        <mat-error *ngIf="briefFormControl.hasError('maxlength')">
+                            Brief description is longer {{event.briefDescription.length}}/150
+                        </mat-error>
+                        <mat-error *ngIf="briefFormControl.hasError('required')">
+                            Brief Description is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="6" [rowspan]="3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Full Description</mat-label>
+                        <textarea matInput placeholder="Full Description" id="detailed_description"
+                                  [(ngModel)]="event.fullDescription" name="fullDescription"
+                                  [formControl]="fullDescFormControl"></textarea>
+                        <mat-hint>The full of the event. Include every detail here</mat-hint>
+                        <mat-error *ngIf="fullDescFormControl.hasError('required')">
+                            A full description is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <!--<mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" [formControl]="emailFormControl"
+                               [(ngModel)]="event.contactEmail">
+                        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                            Please enter a valid email address
+                        </mat-error>
+                        <mat-error *ngIf="emailFormControl.hasError('required')">
+                            Email is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>-->
+                <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <button type="submit" mat-raised-button id="publish_button" class="form_button">Publish</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </form>
+    </div>
+    <div fxShow="true" fxHide.gt-sm="true">
+        <form (ngSubmit)="createEvent()" #myForm="ngForm">
+            <mat-grid-list [cols]="1" rowHeight="85px" gutterSize="10px" class="event_grid">
+                <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="showProgressBar">
+                    Uploading event
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Event Title</mat-label>
+                        <input matInput placeholder="Title" id="title" [(ngModel)]="event.title" name="title"
+                               [formControl]="titleFormControl">
+                        <mat-error *ngIf="titleFormControl.hasError('maxlength')">
+                            Title is exceeding max {{event.title.length}}/50
+                        </mat-error>
+                        <mat-error *ngIf="titleFormControl.hasError('required')">
+                            Title is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Event Location</mat-label>
+                        <input matInput placeholder="Location" id="location" [(ngModel)]="event.place"
+                               name="location"
+                               [formControl]="locationFormControl">
+                        <mat-error *ngIf="locationFormControl.hasError('maxlength')">
+                            Location is exceeding max {{event.place.length}}/20
+                        </mat-error>
+                        <mat-error *ngIf="locationFormControl.hasError('required')">
+                            Location is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Categories" name="categories" [(ngModel)]="event.categoryName"
+                                    [formControl]="categoryFormControl">
+                            <mat-option>None</mat-option>
+                            <mat-option *ngFor="let category of categories;"
+                                        value="{{category}}">{{category}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="categoryFormControl.hasError('required')">
+                            A category is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Date</mat-label>
+                        <input matInput placeholder="Date" id="date"
+                               [(ngModel)]="event.dateTimestamp" [formControl]="generalFormControl">
+                        <mat-hint>The date the event will take place</mat-hint>
+                        <mat-error *ngIf="generalFormControl.hasError('required')">
+                            Date is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Time</mat-label>
+                        <input matInput id="start_time_hour" placeholder="HH:MM" [formControl]="stimeFormControl"
+                               [(ngModel)]="event.startHour">
+                        <mat-error *ngIf="stimeFormControl.hasError('required')">
+                            Start Time is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>End Time</mat-label>
+                        <input matInput placeholder="HH:MM" id="end_time_hour" [formControl]="etimeFormControl"
+                               [(ngModel)]="event.endHour">
+                        <mat-error *ngIf="etimeFormControl.hasError('required')">
+                            End Time is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Brief Description</mat-label>
+                        <textarea matInput placeholder="Brief Description" id="brief_description_mobile"
+                                  [(ngModel)]="event.briefDescription" name="briefDescription"
+                                  [formControl]="briefFormControl"></textarea>
+                        <mat-hint>Simple description to catch the attention of the
+                            user {{event.briefDescription.length}}
+                            /150
+                        </mat-hint>
+                        <mat-error *ngIf="briefFormControl.hasError('maxlength')">
+                            Brief description is longer {{event.briefDescription.length}}/150
+                        </mat-error>
+                        <mat-error *ngIf="briefFormControl.hasError('required')">
+                            Brief Description is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Full Description</mat-label>
+                        <textarea matInput placeholder="Full Description" id="detailed_description_mobile"
+                                  [(ngModel)]="event.fullDescription" name="fullDescription"
+                                  [formControl]="fullDescFormControl"></textarea>
+                        <mat-hint>The full of the event. Include every detail here</mat-hint>
+                        <mat-error *ngIf="fullDescFormControl.hasError('required')">
+                            A full description is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <!--<mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" [formControl]="emailFormControl"
+                               [(ngModel)]="event.contactEmail">
+                        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                            Please enter a valid email address
+                        </mat-error>
+                        <mat-error *ngIf="emailFormControl.hasError('required')">
+                            Email is required
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>-->
+                <mat-grid-tile [colspan]="1" [rowspan]="4">
+                    <div id="events_feed" class="events_feed main_grid_item">
+
+                        <div class='event' title='{{imageUrl}}'>
+                            <div class='event_image_container'>
+                                <!--<mat-grid-tile [colspan]="2" [rowspan]="1">-->
+
+                                <!--</mat-grid-tile>-->
+                                <span>&nbsp;<img height=150 width=150 [src]="url"/></span>
+
+                            </div>
+                            <div class='event_title'>{{event.title}}</div>
+                            <div class="event_postedby">Posted by {{user.username}} </div>
+                            <div class='event_header'>
+                                <div class='event_info_header'>
+                                    <div class='event_date'> {{tempDate | date: 'EEE, MMM d, yyyy'}}
+                                        {{tempSHour | date: 'hh:mm a'}}-{{tempEHour | date: 'hh:mm a'}}</div>
+                                    <div class='event_place'>Place: {{event.place}} </div>
+                                </div>
+                            </div>
+                            <div class='event_brief_description'>{{event.briefDescription}}<br/></div>
+                            <img class="saved_event_bookmark_icon btn"
+                                 src="/assets/images/bookmark_icon_for_saved_events_gray.png">
+                        </div>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <button type="button" id="publish_button" mat-raised-button (click)="fileInput.click()">
+                    <span>Upload Image</span>
+                    <input #fileInput type="file" (change)="onSelectFile($event)" style="display:none;"/>
+                </button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <button type="submit" mat-raised-button id="publish_button" class="form_button">Publish</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </form>
+    </div>
+</div>

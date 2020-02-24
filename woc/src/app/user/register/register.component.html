@@ -1,0 +1,92 @@
+<!--<form class='form' name="registerform" method="post" #formCtrl="ngForm">
+    <div>
+        <label class="error">{{ errorMessage }}</label>
+        &lt;!&ndash; <label class="success">{{ successMessage }}</label> &ndash;&gt;
+    </div>
+
+
+</form>-->
+
+<form (ngSubmit)="registerUser()" class="registerform form" [formGroup]="registerForm">
+    <h3>Registration</h3>
+    <h5>{{errorMessage}}</h5>
+    <mat-grid-list cols="8" rowHeight="25px" gutterSize="10px" class="event_grid">
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput">
+                <mat-label>First Name</mat-label>
+                <input matInput type="firstName" [(ngModel)]="register.firstName" placeholder="First Name"
+                       formControlName="firstname">
+                <mat-error *ngIf="firstNameFormControl.hasError('required')">
+                    First Name is required
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput">
+                <mat-label>Last Name</mat-label>
+                <input matInput type="lastName" [(ngModel)]="register.lastName" placeholder="Last Name"
+                       formControlName="lastname">
+                <mat-error *ngIf="lastNameFormControl.hasError('required')">
+                    Last Name is required
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput">
+                <mat-label>Username</mat-label>
+                <input matInput type="username" [(ngModel)]="register.username" placeholder="Username"
+                       formControlName="username">
+                <mat-error *ngIf="lastNameFormControl.hasError('required')">
+                    Username is required
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" [(ngModel)]="register.email" placeholder="Email"
+                       formControlName="email">
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Email is required
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Password" [(ngModel)]="register.password"
+                       formControlName="password">
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                    Password is required
+                </mat-error>
+                <mat-error *ngIf="passwordFormControl.hasError('pattern')">
+                    Your password requires at least 8 characters; one uppercase, one lowercase, one number and a symbol
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <mat-form-field appearance="outline" class="loginInput">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput type="password" placeholder="Password" [(ngModel)]="register.password2"
+                       formControlName="passwordConfirm">
+                <mat-error *ngIf="confirmPasswordFormControl.hasError('required') ||
+                                confirmPasswordFormControl.hasError('notEquivalent')">
+                    Passwords don't match
+                </mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="8" [rowspan]="2">
+            <button type="submit" mat-raised-button class="btn" id="loginButton" [disabled]="registerForm.invalid">
+                Register
+            </button>
+
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="8" [rowspan]="2">
+            Have an Account? <a routerLink="/login">Login</a>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>

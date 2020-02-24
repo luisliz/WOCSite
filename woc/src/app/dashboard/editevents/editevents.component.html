@@ -1,0 +1,154 @@
+<h3>Edit Events</h3>
+<mat-divider></mat-divider>
+<h5>Active Events</h5>
+<mat-divider></mat-divider>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let event of activeEventObs | async">
+        <mat-expansion-panel-header>
+            <mat-panel-title fxFlex="70">
+                <div fxFlex="10">{{event.eid}}</div>
+                <div fxFlex="90">{{event.title}}</div>
+            </mat-panel-title>
+            <mat-panel-description>
+                <span>{{event.dateTimestamp | date: 'EEE, MMM d, yyyy'}}</span>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-grid-list cols="8" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="2">
+                <img height=140 width=210 src='{{event.imageurl}}'/>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="6" [rowspan]="1">
+                <div style="width: 100%" fxLayout="column" fxLayoutAlign="space-between start">
+                    <div style="width: 100%" fxLayout="row">
+                        <div fxLayout="column" fxFlex="30">
+                            <span class="title">Date</span>
+                            <span>{{event.dateTimestamp | date: 'EEE, MMM d, yyyy'}}</span>
+                        </div>
+                        <div fxLayout="column" fxFlex="30">
+                            <span class="title">Time</span>
+                            <span>{{event.startHour | date:'hh:mm a'}}-{{event.endHour | date:'hh:mm a'}}</span>
+                        </div>
+                        <div fxLayout="column" fxFlex="30">
+                            <span class="title">Category</span>
+                            <span>{{event.categoryName}}</span>
+                        </div>
+                        <div fxLayout="column" fxFlex="30">
+                            <span class="title">Location</span>
+                            <span>{{event.place}}</span>
+                        </div>
+                    </div>
+                    <div fxLayout="column">
+                        <span class="title">Brief Description</span>
+                        <span>{{event.briefDescription}}</span>
+                    </div>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="6">
+                <div style="width: 100%" fxLayout="row" fxLayoutAlign="space-around start">
+                    <a routerLink="/event/{{event.eid}}" target="_blank">
+                        <button mat-raised-button>View Event</button>
+                    </a>
+                    <a routerLink="/dashboard/edit/{{event.eid}}">
+                        <button mat-raised-button>Edit Event</button>
+                    </a>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<h5>Past Events</h5>
+<mat-divider></mat-divider>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let event of oldEventsObs | async">
+        <mat-expansion-panel-header>
+            <mat-panel-title fxFlex="70">
+                <div fxFlex="10">{{event.eid}}</div>
+                <div fxFlex="90">{{event.title}}</div>
+            </mat-panel-title>
+            <mat-panel-description>
+                <span>{{event.dateTimestamp | date: 'EEE, MMM d, yyyy'}}</span>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-grid-list cols="8" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="2">
+                <img height=140 width=210 src='{{event.imageurl}}'/>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="6" [rowspan]="2">
+                <div style="width: 100%" fxLayout="column" fxLayoutAlign="space-between start">
+                    <div style="width: 100%" fxLayout="row">
+                        <div fxLayout="column" fxFlex="30">
+                            <span class="title">Date</span>
+                            <span>{{event.dateTimestamp | date: 'EEE, MMM d, yyyy'}}</span>
+                        </div>
+                        <div fxLayout="column" fxFlex="30">
+                            <span class="title">Time</span>
+                            <span>{{event.startHour | date:'hh:mm a'}}-{{event.endHour | date:'hh:mm a'}}</span>
+                        </div>
+                        <div fxLayout="column" fxFlex="30">
+                            <span class="title">Category</span>
+                            <span>{{event.categoryName}}</span>
+                        </div>
+                        <div fxLayout="column" fxFlex="30">
+                            <span class="title">Location</span>
+                            <span>{{event.place}}</span>
+                        </div>
+                    </div>
+                    <div fxLayout="column">
+                        <span class="title">Brief Description</span>
+                        <span>{{event.briefDescription}}</span>
+                    </div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator [pageSizeOptions]="[15, 30, 50]" showFirstLastButtons></mat-paginator>
+<!--
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="eid">
+        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+        <mat-cell *matCellDef="let event">
+            {{event.eid}}
+        </mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Title</mat-header-cell>
+        <mat-cell *matCellDef="let event">
+
+        </mat-cell>
+    </ng-container>
+
+&lt;!&ndash;    <ng-container matColumnDef="categoryName">
+        <mat-header-cell *matHeaderCellDef> Category</mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.categoryName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="place">
+        <mat-header-cell *matHeaderCellDef> Location</mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.place}} </mat-cell>
+    </ng-container>&ndash;&gt;
+
+&lt;!&ndash;
+    <ng-container matColumnDef="dateTimestamp">
+        <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.dateTimestamp | date: 'EEE, MMM d, yyyy'}} </mat-cell>
+    </ng-container>
+&ndash;&gt;
+
+  &lt;!&ndash;  <ng-container matColumnDef="startHour">
+        <mat-header-cell *matHeaderCellDef> Start Time</mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.startHour | date:'hh:mm a'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="endHour">
+        <mat-header-cell *matHeaderCellDef> End Time</mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.endHour | date:'hh:mm a'}} </mat-cell>
+    </ng-container>&ndash;&gt;
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>-->
+

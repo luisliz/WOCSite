@@ -1,0 +1,32 @@
+<mat-drawer-container class="dashboard-container" autosize>
+    <mat-drawer #drawer [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" class="dashboard-sidenav">
+        <mat-nav-list fxFlexFill fxLayout="column">
+            <div id="logo">
+                <img src="/assets/images/logo.png" alt="Logo, Home">
+            </div>
+            <span id="identification"><span *ngIf="isAdmin">
+                Administrator
+            </span>
+            <span *ngIf="!isAdmin">
+                Association
+            </span>, {{username}}</span>
+            <a mat-list-item routerLink="/dashboard/"><mat-icon>home</mat-icon>Overview</a>
+            <a mat-list-item routerLink="/dashboard/create"><mat-icon>event_available</mat-icon>Create Event</a>
+            <a mat-list-item routerLink="/dashboard/edit"><mat-icon>event</mat-icon>Edit Events</a>
+            <span *ngIf="isAdmin">
+                Administration
+                <a mat-list-item routerLink="/dashboard/users"><mat-icon>person</mat-icon>Users</a>
+            </span>
+            <div fxFlex></div>
+            <a mat-list-item routerLink="/"><mat-icon>arrow_back</mat-icon>&nbsp;WOC Home</a>
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <button type="button" mat-button (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <div class="dashboard-sidenav-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

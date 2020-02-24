@@ -1,0 +1,32 @@
+table {
+    width: 100%;
+}
+
+.title {
+    font-weight: bold;
+}
+.mat-column-eid {
+    flex: 0 0 40px;
+}
+
+.mat-column-title {
+    flex: 0 0 450px;
+}
+
+.mat-column-categoryName, .mat-column-place, .mat-column-dateTimestamp {
+    flex: 0 0 150px;
+}
+
+.mat-column-endHour, .mat-column-startHour {
+    flex: 0 0 70px;
+}
+
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+td, th {
+    width: 25%;
+}

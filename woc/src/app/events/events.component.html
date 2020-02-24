@@ -1,0 +1,45 @@
+<div id="events_feed" class="events_feed main_grid_item" fxLayoutGap>
+    <div *ngIf="!events.length">
+        No events here
+    </div>
+    <div class='event' title='{{imageUrl}}' *ngFor="let event of events; let i = index"
+         (click)="eventClick($event, event.eid)">
+        <div class='event_image_container'><img height=150 width=150 src='{{event.imageurl}}'/></div>
+        <div class='event_title'>{{event.title}}</div>
+        <div class="event_postedby">Posted by {{event.postedBy}} </div>
+        <div class='event_header'>
+            <div class='event_info_header'>
+                <div class='event_hour'>{{event.startHour | date: 'hh:mm a'}} - {{event.endHour | date:'hh:mm a'}}</div>
+                <div class='event_date'> {{event.dateTimestamp | date: 'EEE, MMM d, yyyy' }}</div>
+                <div class='event_place'>Place: {{event.place}} </div><!--
+                        <div>Contact:<br> email ({{event.contactEmail}}) <br>phone: ({{event.contactPhone}})</div>-->
+            </div>
+        </div>
+        <div class='event_brief_description'>{{event.briefDescription}}<br/>
+            <!--Category: {{event.categoryName}}--></div>
+        <div title='{{association_id}}' class='event_association_name standard_text'>Posted
+            by {{association_name}}</div>
+        <!--Version hector            <img class="saved_event_bookmark_icon btn" src='{{event.src}}' (click)="saveEvent(event.eid, $event.target)">-->
+        <span *ngIf="!event.saved">
+            <img class="saved_event_bookmark_icon btn" src="/assets/images/bookmark_icon_for_saved_events_gray.png"
+                 (click)="saveEvent($event.target, event.eid)">
+            </span>
+        <span *ngIf="event.saved">
+            <img class="saved_event_bookmark_icon btn" src="/assets/images/bookmark_icon_for_saved_events_green.png"
+                 (click)="saveEvent($event, event.eid)"/>
+            </span>
+    </div>
+
+</div>
+<div fxLayout="row" fxLayoutAlign="center center">
+    <span *ngIf="!disPrevPage"><a href="/{{link}}/{{prevPage}}"><mat-icon>keyboard_arrow_left</mat-icon></a></span>
+    <span>{{page}}</span>
+    <span><a href="/{{link}}/{{nextPage}}"><mat-icon>keyboard_arrow_right</mat-icon></a></span>
+</div>
+
+
+<!--
+'eid': event.eid,
+          'categoryName': event.categoryname,
+          'contactEmail': event.contactEmail,
+          'postedBy': event.postedBy, 'fullDescription': event.fullDescription, -->

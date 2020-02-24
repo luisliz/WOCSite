@@ -1,0 +1,160 @@
+<div class="main_grid">
+    <div class="message_modal_box" hidden>
+        <div class="message_modal_content">
+            <img class="message_modal_close_icon" src="/assets/images/x_close_icon.png">
+            <a class="message_modal_text_line_1"> Your account is not verified.</a>
+            <a class="message_modal_text_line_2">Do it now and start enjoying new features right now. </a>
+            <button class="message_modal_action_button">Verify Account</button>
+        </div>
+    </div>
+
+
+    <!--<mat-drawer-container class="dashboard-container" autosize>
+        <mat-drawer #drawer [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" class="dashboard-sidenav">
+            <mat-nav-list fxFlexFill fxLayout="column">
+                <div id="logo">
+                    <img src="/assets/images/logo.png" alt="Logo, Home">
+                </div>
+                <a mat-list-item routerLink="/dashboard/create"><mat-icon>home</mat-icon>&nbsp;Create Events</a>
+                <a mat-list-item routerLink="/dashboard/edit"><mat-icon>event</mat-icon>&nbsp;Edit Events</a>
+                <span *ngIf="isAdmin">
+            Administrator
+            <a mat-list-item routerLink="/dashboard/users"><mat-icon>person</mat-icon>&nbsp;Users</a>
+        </span>
+                <div fxFlex></div>
+                <a mat-list-item routerLink="/"><mat-icon>arrow_back</mat-icon>&nbsp;WOC Home</a>
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+            <button type="button" mat-button (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <div class="dashboard-sidenav-content">
+
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>-->
+
+    <div>
+
+        <mat-toolbar class="header upper_header">
+            <div fxShow="true" fxHide.gt-sm="true">
+                <button mat-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+            <div id="logo">
+                <img routerLink="/" src="/assets/images/logo.png" alt="Logo">
+            </div>
+            <span id="header_website_title" routerLink="/">What's on Campus</span>
+
+            <div fxShow="true" fxHide.lt-md="true">
+
+                <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+                <div fxLayout="row">
+                    <button mat-button routerLink="/">Home</button>
+                    <button mat-button routerLink="/events">Events</button>
+                    <button mat-button routerLink="/saved">Saved Events</button>
+                    <button mat-button [matMenuTriggerFor]="menu">Categories</button>
+                    <mat-menu #menu="matMenu" class="dropdown_menu">
+                        <button mat-menu-item *ngFor="let category of categories;" value={{category}}
+                                class="category_option_button dropdown_option"
+                                routerLink="/events/categories/{{category}}"
+                                id={{category}} name={{category}}>{{category}}</button>
+                    </mat-menu>
+                    <!--<span fxFill></span>-->
+                    <span fxLayoutAlign="end">
+                        <a mat-button class="playappiconButton" target="_blank"
+                           href="https://play.google.com/store/apps/details?id=com.hacksquad.pr.woc">
+                            <img class="appicon" src="/assets/logo/playstore.png" alt="">
+                        </a>
+                        <a mat-button class="appiconButton" target="_blank"
+                           href="https://testflight.apple.com/join/dwGxzymd">
+                            <img class="appicon" src="/assets/logo/appstore.png" alt="">
+                        </a>
+                        <button mat-button routerLink="/login" *ngIf="!signedIn">Sign In</button>
+                        <button mat-button routerLink="/register" *ngIf="!signedIn">Register</button>
+                        <button mat-button [matMenuTriggerFor]="usermenu" *ngIf="signedIn">
+                            <mat-icon>account_circle</mat-icon>&nbsp;
+                            {{user}}
+                            <mat-icon>arrow_drop_down</mat-icon>
+                        </button>
+                        <mat-menu #usermenu="matMenu" class="dropdown_menu">
+
+                            <span *ngIf="isAssoc">
+                                <button mat-menu-item routerLink="/dashboard">Event Dashboard</button>
+                            </span>
+                            <span *ngIf="isAdmin">
+                                <button mat-menu-item routerLink="/dashboard/edit">Admin Panel</button>
+                            </span>
+                            <button mat-menu-item routerLink="/settings" *ngIf="signedIn">Account Settings</button>
+                            <button mat-menu-item (click)="logout()" *ngIf="!signedIn">Log out</button>
+                        </mat-menu>
+                    </span>
+                </div>
+            </div>
+        </mat-toolbar>
+
+        <mat-sidenav-container>
+            <mat-sidenav #sidenav fxLayout="column" fxLayoutAlign="center" class="sidebar-container">
+                <div fxLayout="column" fxFlexFill>
+                    <button (click)="sidenav.toggle()" mat-button>
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <button mat-button routerLink="/">Home</button>
+                    <button mat-button routerLink="/events">Events</button>
+                    <button mat-button routerLink="/saved">Saved Events</button>
+                    <button mat-button [matMenuTriggerFor]="menu">Categories</button>
+                    <mat-menu #menu="matMenu" class="dropdown_menu">
+                        <button mat-menu-item *ngFor="let category of categories;" value={{category}}
+                                class="category_option_button dropdown_option"
+                                routerLink="/events/categories/{{category}}"
+                                id={{category}} name={{category}}>{{category}}</button>
+                    </mat-menu>
+
+                    <button mat-button routerLink="/login" *ngIf="!signedIn">Sign In</button>
+                    <button mat-button routerLink="/register" *ngIf="!signedIn">Register</button>
+                    <button mat-button [matMenuTriggerFor]="usermenu" *ngIf="signedIn">
+                        <mat-icon>account_circle</mat-icon>&nbsp;
+                        {{user}}
+                        <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+                    <mat-menu #usermenu="matMenu" class="dropdown_menu">
+                        <span *ngIf="isAssoc">
+                            <button mat-menu-item routerLink="/dashboard">Event Dashboard</button>
+                        </span>
+                        <span *ngIf="isAdmin">
+                            <button mat-menu-item routerLink="/dashboard/edit">Admin Panel</button>
+                        </span>
+                        <button mat-menu-item routerLink="/settings">Account Settings</button>
+                        <button mat-menu-item (click)="logout()">Log out</button>
+                    </mat-menu>
+                    <div fxFlex="2"></div>
+                    <a mat-button class="playappiconButton" target="_blank"
+                       href="https://play.google.com/store/apps/details?id=com.hacksquad.pr.woc">
+                        <img class="appicon" src="/assets/logo/playstore.png" alt="">
+                    </a>
+                    <a mat-button class="appiconButton" target="_blank"
+                       href="https://testflight.apple.com/join/dwGxzymd">
+                        <img class="appicon" src="/assets/logo/appstore.png" alt="">
+                    </a>
+                </div>
+            </mat-sidenav>
+
+            <mat-sidenav-content>
+                <router-outlet></router-outlet>
+                <router-outlet name="footer">
+                    <div class="footer main_grid_item">
+                        <a routerLink="/privacy">Privacy Policy</a>
+                        | <a routerLink="/tos">Terms of Service</a><br>
+                        Copyright &copy; 2019 HackSquad
+                    </div>
+                    <a href="https://goo.gl/forms/HfILSUYJesK1CRkx2">
+                        <img class="feedback_button" src="/assets/images/Feedback.png"/>
+                    </a>
+                </router-outlet>
+            </mat-sidenav-content>
+
+        </mat-sidenav-container>
+    </div>
+</div>
