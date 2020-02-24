@@ -26,8 +26,6 @@ import {ChangePasswordComponent} from './user/settings/change-password/change-pa
 import {TosComponent} from "./legal/tos/tos.component";
 import {PrivacyComponent} from "./legal/privacy/privacy.component";
 import {EditeventComponent} from "./dashboard/editevent/editevent.component";
-import {ActivateComponent} from "./user/settings/activate/activate.component";
-import {ResetComponent} from "./user/reset/reset.component";
 
 
 const routes: Routes = [
@@ -47,8 +45,6 @@ const routes: Routes = [
                 ]
             },
 
-            {path: 'confirm/:token', component: ActivateComponent},
-
             {path: 'privacy', component: PrivacyComponent},
             {path: 'tos', component: TosComponent},
 
@@ -61,8 +57,6 @@ const routes: Routes = [
         children: [
             {path: 'login', component: LoginComponent},
             {path: 'register', component: RegisterComponent},
-            {path: 'resetpassword', component: ResetComponent},
-            {path: 'resetpassword/:token', component: ResetComponent},
         ]
     },
 

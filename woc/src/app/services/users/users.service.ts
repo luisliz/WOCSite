@@ -23,17 +23,10 @@ export class UsersService {
     }
 
     saveEvent(eid) {
+        console.log("THIS? " + eid);
         //const body = new HttpParams().set('uid', this.uid);
         //console.log(this.uid);
         return this.http.post(this.base_url + 'mobile/save/' + eid, '', this.head);
-    }
-
-    activateAccount(token) {
-        return this.http.get(this.base_url + 'confirm/' + token);
-    }
-
-    resendactivation(token) {
-        return this.http.get(this.base_url + 'resendactivation/' + token);
     }
 
 }

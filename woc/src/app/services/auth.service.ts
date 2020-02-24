@@ -91,24 +91,4 @@ export class AuthService {
                 headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
             });
     }
-
-    resetPassword(email) {
-        var passwordReset = new HttpParams().set('email', email);
-
-        return this.http.post(this.base_url + 'resetpassword/', passwordReset.toString(),
-            {
-                headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-            });
-    }
-
-    resetChangePassword(token, newPassword, newPasswordConfirmation) {
-        var passwordReset = new HttpParams().set('newPassword', newPassword)
-            .set('confirmPassword', newPasswordConfirmation);
-
-        return this.http.post(this.base_url + 'resetpassword/'+token, passwordReset.toString(),
-            {
-                headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-            });
-
-    }
 }

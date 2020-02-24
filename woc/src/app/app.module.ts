@@ -62,8 +62,6 @@ import {ChangePasswordComponent} from './user/settings/change-password/change-pa
 import {TosComponent} from './legal/tos/tos.component';
 import {PrivacyComponent} from './legal/privacy/privacy.component';
 import { EditeventComponent } from './dashboard/editevent/editevent.component';
-import { ResetComponent } from './user/reset/reset.component';
-import { ActivateComponent } from './user/settings/activate/activate.component';
 
 @NgModule({
     declarations: [
@@ -88,9 +86,7 @@ import { ActivateComponent } from './user/settings/activate/activate.component';
         ChangePasswordComponent,
         TosComponent,
         PrivacyComponent,
-        EditeventComponent,
-        ResetComponent,
-        ActivateComponent
+        EditeventComponent
     ],
     imports: [
         BrowserModule,
