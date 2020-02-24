@@ -60,7 +60,7 @@ h2 {
     color: red;
 }
 
-.loginInput, .resetInput {
+.loginInput {
     width: 100%;;
 }
 
@@ -73,7 +73,7 @@ h2 {
     font-size: 14px;
 }
 
-.form #create_button, .form #loginButton, .form #resetButton {
+.form #create_button, .form #loginButton {
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     outline: 0;

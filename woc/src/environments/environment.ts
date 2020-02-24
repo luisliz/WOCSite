@@ -4,8 +4,15 @@
 
 export const environment = {
     production: false,
-
-    API_URL: "http://127.0.0.1:8080/WhatsOnCampus/",
+    /*firebase: {
+      apiKey: "AIzaSyCIUFSaKhAX1z3aI3-iOqeCQGOATPP7XHY",
+      authDomain: "whats-on-campus.firebaseapp.com",
+      databaseURL: "https://whats-on-campus.firebaseio.com",
+      projectId: "whats-on-campus",
+      storageBucket: "whats-on-campus.appspot.com",
+      messagingSenderId: "2443063959"
+  },*/
+    API_URL: "https://wocpr.com/api/WhatsOnCampus/",
     IMAGE_URL: "https://wocpr.com"
 };
 
